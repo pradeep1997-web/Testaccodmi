@@ -1,0 +1,59 @@
+{% extends 'branch/home.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Result Of Student</h4>
+
+        <form method="post" action="{% url 'student_result' %}" class="login-signup">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <input type="submit" class="btn btn-success" value="Save">
+        </form>
+    </div>
+    <div class="col-sm-7 offeset-1">
+        <h4 class="text-center alert alert-info">Show Student Result</h4>
+        <button type="button" class="btn btn-block btn btn-success" onclick="get_table()">You can see all student  results click here </button>
+        {% if stu %}
+        <table class="table table-hover" id="tabledata">
+  <thead>
+    <tr>
+        <th scope="col">ID</th>
+      <th scope="col">Student Name</th>
+      <th scope="col">subject Name</th>
+      <th scope="col">Max Number</th>
+         <th scope="col">Mark</th>
+      <th scope="col">Remark</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for st in stu %}
+    <tr><th scope="row">{{st.id}}</th>
+        <td>{{st.student_name}}</td>
+        <td>{{st.subject_name}}</td>
+        <td>{{st.max_no}}</td>
+        <td>{{st.mark}}
+        <td>{{st.remark}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+        </table>>
+        {% else %}
+         <h4 class="text-center alert alert-warning">No Records</h4>
+        {% endif %}
+    </div>
+</div>
+<script>
+
+  function get_table(){
+     document.getElementById('tabledata').style.display = 'block';
+  }
+
+</script>
+
+<style>
+    #tabledata {
+    display: none;
+</style>
+
+
+{% endblock content %}
